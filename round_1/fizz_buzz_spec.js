@@ -1,6 +1,6 @@
 "use strict";
 
-describe('kata fizz buzz', function () {
+describe('kata fizz buzz round_1', function () {
   var api;
 
   beforeEach(function () {
