@@ -28,8 +28,8 @@ function get_list_files_async (callback) {
   var list_files = [];
   var filepath = __dirname + '/input_files/files_to_read';
   fs.readFile(filepath, 'utf8', function (error, lines) {
-    var uno = lines.split( "\n" );
-    callback(uno);
+    var data = lines.split( "\n" );
+    callback(data);
   })
 }
 
