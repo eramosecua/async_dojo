@@ -31,4 +31,11 @@ describe('kata fizz buzz round_1', function () {
     expect(api.execute(mock)).toEqual(array_returned);
   });
 
+  it('should return throws', function () {
+    var mock = [ 20, 21, 22, 23, 24, 25, 26, 27, 28, 'Luinix_for_president', 30 ];
+    var array_returned = ['buzz', 'fizz', 22, 23, 'fizz', 'buzz', 26, 'fizz', 28, 'Luinix_for_president', 'fizzbuzz'];
+    expect(api.execute(mock)).toEqual(array_returned);
+
+  });
+
 });
