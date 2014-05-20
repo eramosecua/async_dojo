@@ -16,7 +16,6 @@ function main_async (callback){
         var data = JSON.parse(lines);
         results.push(map.execute(data));
         if(results.length == files.length) {
-          console.log(results);
           callback(error, results);
         }
       })
