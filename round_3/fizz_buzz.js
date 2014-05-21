@@ -5,35 +5,29 @@ var map = require('../round_1/fizz_buzz.js');
 var _ = require('underscore');
 var Q = require('q');
 
-function main_async (callback){
+function main_async (){
   var deferred = Q.defer();
   var results = [];
 
   return get_list_files_async()
   .then(function (files) {
     _(files).each(function (file) {
-      var filepath = __dirname + '/input_files/'+file;
-
-      fs.readFile(filepath, 'utf8', function (error, lines) {
-
-        if (error) {
-          deferred.reject(error);
-        }
-
-        var data = JSON.parse(lines);
-        results.push(map.execute(data));
-
-        if(results.length === files.length) {
-          deferred.resolve(results);
-          console.log('aui...')
-        }
+      get_map_to_fizz_buzz(file)
+      .then(function (data) {
+        results.push(data);
+        //console.log(data);
+        deferred.resolve(results);
+        return deferred.promise;
       });
-      return deferred.promise;
+      //console.log(results);
     });
-  });
+
+    return deferred.promise;
+  })
+
 }
 
-function get_list_files_async (callback) {
+function get_list_files_async () {
   var deferred = Q.defer();
   var filepath = __dirname + '/input_files/files_to_read';
 
@@ -49,8 +43,29 @@ function get_list_files_async (callback) {
   return deferred.promise;
 }
 
+function get_map_to_fizz_buzz (file) {
+  var deferred = Q.defer();
+  var filepath = __dirname + '/input_files/'+file;
+
+  fs.readFile(filepath, 'utf8', function (error, lines) {
+    if (error) {
+      deferred.reject(error);
+    }
+
+    var data = JSON.parse(lines);
+
+    deferred.resolve(map.execute(data));
+    /*if(files.length === results.length) {
+      console.log('...aqui...')
+      console.log(results);
+      return deferred.resolve(results);
+    }*/
+  })
+  return deferred.promise;
+}
+
 module.exports = {
-  execute_async: function (callback) {
-    return  main_async(callback);
+  execute_async: function () {
+    return  main_async();
   }
 };
