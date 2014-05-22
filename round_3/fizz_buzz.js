@@ -15,16 +15,14 @@ function main_async (){
       get_map_to_fizz_buzz(file)
       .then(function (data) {
         results.push(data);
-        //console.log(data);
-        deferred.resolve(results);
-        return deferred.promise;
-      });
-      //console.log(results);
+        if(files.length === results.length) {
+          deferred.resolve(results);
+        }
+      })
     });
 
     return deferred.promise;
   })
-
 }
 
 function get_list_files_async () {
