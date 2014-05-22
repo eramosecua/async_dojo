@@ -51,14 +51,9 @@ function get_map_to_fizz_buzz (file) {
     }
 
     var data = JSON.parse(lines);
-
     deferred.resolve(map.execute(data));
-    /*if(files.length === results.length) {
-      console.log('...aqui...')
-      console.log(results);
-      return deferred.resolve(results);
-    }*/
   })
+
   return deferred.promise;
 }
 
