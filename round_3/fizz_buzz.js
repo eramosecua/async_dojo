@@ -1,31 +1,32 @@
-"use strict";
+'use strict';
 
 var fs = require('fs');
-var map = require('../round_1/fizz_buzz.js');
+var fizzbuzz = require('../round_1/fizz_buzz.js');
 var _ = require('underscore');
 var Q = require('q');
 
 function main_async (){
   var deferred = Q.defer();
-  var results = [];
+  var array_returned = [];
 
-  return get_list_files_async()
+  return get_files_list_async()
   .then(function (files) {
     _(files).each(function (file) {
-      get_map_to_fizz_buzz(file)
+      convert_to_fizz_buzz(file)
       .then(function (data) {
-        results.push(data);
-        if(files.length === results.length) {
-          deferred.resolve(results);
+        array_returned.push(data);
+
+        if(files.length === array_returned.length) {
+          deferred.resolve(array_returned);
         }
-      })
+      });
     });
 
     return deferred.promise;
-  })
+  });
 }
 
-function get_list_files_async () {
+function get_files_list_async () {
   var deferred = Q.defer();
   var filepath = __dirname + '/input_files/files_to_read';
 
@@ -34,14 +35,14 @@ function get_list_files_async () {
       deferred.reject(error);
     }
 
-    var data = lines.split( "\n" );
+    var data = lines.split( '\n' );
     deferred.resolve(data);
   });
 
   return deferred.promise;
 }
 
-function get_map_to_fizz_buzz (file) {
+function convert_to_fizz_buzz (file) {
   var deferred = Q.defer();
   var filepath = __dirname + '/input_files/'+file;
 
@@ -51,14 +52,14 @@ function get_map_to_fizz_buzz (file) {
     }
 
     var data = JSON.parse(lines);
-    deferred.resolve(map.execute(data));
-  })
+    deferred.resolve(fizzbuzz.convert(data));
+  });
 
   return deferred.promise;
 }
 
 module.exports = {
-  execute_async: function () {
+  convert_async: function () {
     return  main_async();
   }
 };

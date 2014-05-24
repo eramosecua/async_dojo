@@ -1,15 +1,14 @@
-"use strict";
+'use strict';
 
 describe('kata fizz buzz round_3', function () {
-  var api;
-  var _ = require('underscore');
+  var fizzbuzz;
 
   beforeEach(function () {
-    api = require('./fizz_buzz.js');
+    fizzbuzz = require('./fizz_buzz.js');
   });
 
   it('should return promises ', function (done) {
-    api.execute_async()
+    fizzbuzz.convert_async()
     .then(function (data, error) {
       expect(data.length).toBe(3);
       expect(data).toContain([1, 2, 'fizz', 4, 'buzz', 'fizz', 7, 8, 'fizz', 'buzz']);
