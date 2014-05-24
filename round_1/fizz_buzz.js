@@ -3,31 +3,31 @@
 var _ = require('underscore');
 
 function fizz(number) {
-  if (number % 3 == 0 && number % 5 !== 0) {
+  if (number % 3 === 0 && number % 5 !== 0) {
     return true;
   }
   return false;
 }
 
 function buzz (number) {
-  if(number % 5 == 0 && number % 3 !== 0) {
+  if(number % 5 === 0 && number % 3 !== 0) {
     return true;
   }
   return false;
 }
 
 function fizzbuzz(number) {
-  if(number % 5 == 0 && number % 3 == 0) {
+  if(number % 5 === 0 && number % 3 === 0) {
     return true;
   }
   return false;
 }
 
 module.exports = {
-  execute: function (parameter) {
+  convert: function (number_list) {
     var array_returned = [];
 
-    _(parameter).each(function (number) {
+    _(number_list).each(function (number) {
       if (fizz(number)){
         array_returned.push('fizz');
       }else if (buzz(number)) {
@@ -37,7 +37,7 @@ module.exports = {
       }else {
         array_returned.push(number);
       }
-    })
+    });
 
     return array_returned;
   }
