@@ -1,11 +1,11 @@
-"use strict";
+'use strict';
 
 var fs = require('fs');
-var map = require('../round_1/fizz_buzz.js');
+var fizzbuzz = require('../round_1/fizz_buzz.js');
 var _ = require('underscore');
 
 function main_async (callback){
-  var results = [];
+  var array_returned = [];
 
   get_list_files_async(function (files) {
     _(files).each(function (file) {
@@ -13,9 +13,10 @@ function main_async (callback){
 
       fs.readFile(filepath, 'utf8', function (error, lines) {
         var data = JSON.parse(lines);
-        results.push(map.execute(data));
-        if(results.length == files.length) {
-          callback(error, results);
+        array_returned.push(fizzbuzz.convert(data));
+
+        if(array_returned.length === files.length) {
+          callback(error, array_returned);
         }
       });
     });
@@ -24,14 +25,15 @@ function main_async (callback){
 
 function get_list_files_async (callback) {
   var filepath = __dirname + '/input_files/files_to_read';
+
   fs.readFile(filepath, 'utf8', function (error, lines) {
-    var data = lines.split( "\n" );
+    var data = lines.split( '\n' );
     callback(data);
   });
 }
 
 module.exports = {
-  execute_async: function (callback) {
+  convert_async: function (callback) {
     main_async(callback);
   }
 };
